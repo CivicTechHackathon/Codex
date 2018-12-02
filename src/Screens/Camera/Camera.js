@@ -8,6 +8,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { RegisterUser, getUser } from '../../Config/azureApi'
 
 export default class CameraScreen extends Component {
     constructor(props) {
@@ -48,22 +49,13 @@ export default class CameraScreen extends Component {
         if (this.camera) {
             const options = { quality: 0.5, base64: true };
             const data = await this.camera.takePictureAsync(options);
-            fetch('http://localhost:5000/', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded;',
-                },
-                body: JSON.stringify({
-                    base64: 'adadaada',
-                    path: '/1/1'
-                })
-            }).then(res => {
-                console.log(res)
-            }).catch(err => console.log(err))
-
             console.log(data)
             console.log(data.uri);
+            getUser('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgRHDIMQOz8Csa5XTSLJQu1HjBuoPI5suQ91g4AUlaXi2F_ac1').then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
         }
     };
 
